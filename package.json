@@ -1,0 +1,25 @@
+{
+  "name": "spying",
+  "version": "0.0.1",
+  "author": "Jannchie <jannchie@gmail.com>",
+  "description": "Spy on the data of any website, for a long time.",
+  "license": "MIT",
+  "scripts": {
+    "publish:patch": "npm version patch && npm publish"
+  },
+  "dependencies": {
+    "got": "^11.7.0",
+    "winston": "^3.3.3"
+  },
+  "main": "src/index.js",
+  "repository": "github:jannchie/spying.js",
+  "bugs": {
+    "url": "https://github.com/Jannchie/spying.js/issues"
+  },
+  "keywords": [
+    "spider",
+    "crawler",
+    "data"
+  ],
+  "devDependencies": {}
+}
