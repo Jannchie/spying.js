@@ -1,4 +1,4 @@
-import { Spy } from "../src/index";
+import { Spy } from "../src/Spy";
 test("Init Spy", () => {
   new Spy();
 });
@@ -9,7 +9,7 @@ test("Use Options", () => {
 });
 test("Get Google", async () => {
   const s = new Spy({
-    URLIterator: ["https://www.google.com"],
+    URLGener: ["https://www.google.com"],
     onRes: async (res) => {
       console.log(res.url);
     },
@@ -18,7 +18,7 @@ test("Get Google", async () => {
 });
 test("Set Cookies", async () => {
   const s = new Spy({
-    URLIterator: ["http://api.bilibili.com/x/web-interface/card?mid=1850091"],
+    URLGener: ["http://api.bilibili.com/x/web-interface/card?mid=1850091"],
     onRes: async (res) => {
       const j = JSON.parse(res.body);
       console.log(j);
@@ -26,4 +26,15 @@ test("Set Cookies", async () => {
   });
   await s.start();
   expect(s.cookiesMap.has("bfe_id")).toBeTruthy();
+});
+test("Use gener", async () => {
+  const s = new Spy({
+    URLGener: (async function* () {
+      yield "";
+    })(),
+    onRes: async (res) => {
+      console.log(res.url);
+    },
+  });
+  await s.start();
 });

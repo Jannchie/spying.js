@@ -10,8 +10,8 @@
     "coverage": "jest --coverage"
   },
   "dependencies": {
-    "async": "^3.2.0",
     "got": "^11.7.0",
+    "jsemaphore": "^1.0.6",
     "spider-cookies": "^1.0.0",
     "winston": "^3.3.3"
   },
@@ -26,7 +26,6 @@
     "data"
   ],
   "devDependencies": {
-    "@types/async": "^3.2.5",
     "@types/jest": "^26.0.20",
     "@types/tough-cookie": "^4.0.0",
     "jest": "^26.6.3",
