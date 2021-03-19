@@ -1,8 +1,8 @@
 import got, { Response } from "got/dist/source";
-import { logger } from "./Logger";
 import { parseCookies, stringifyCookies } from "spider-cookies";
 import { SpySettings } from "./SpySettings";
 import { Semaphore } from "jsemaphore";
+import { logger } from "./Logger";
 
 export class Spy {
   sleep(msec: number) {
@@ -86,7 +86,7 @@ export class Spy {
     }
   }
 
-  private async updateCookies(res: Response<string>) {
+  async updateCookies(res: Response<string>) {
     const sc = res.headers["set-cookie"];
     if (!sc) return;
     for (const c of sc) {
