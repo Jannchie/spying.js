@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "publish:patch": "npm version patch && npm publish",
-    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "coverage": "jest --coverage"
   },
   "dependencies": {
     "async": "^3.2.0",
