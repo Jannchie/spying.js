@@ -18,6 +18,8 @@ jobs:
           node-version: 12.x
       # install dependencies using clean install to avoid package lock updates
       - run: yarn install
+      # build
+      - run: yarn build
       # finally run the tests
       - run: yarn coverage
       # Save coverage report in Coveralls
