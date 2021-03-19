@@ -1,1 +1,1 @@
-export { Spy } from "./spy";
+export { Spy } from "./Spy";
