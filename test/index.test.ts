@@ -27,6 +27,7 @@ test("Set Cookies", async () => {
   await s.start();
   expect(s.cookiesMap.has("bfe_id")).toBeTruthy();
 });
+
 test("Use gener", async () => {
   const s = new Spy({
     URLGener: (async function* () {
@@ -35,6 +36,29 @@ test("Use gener", async () => {
     onRes: async (res) => {
       console.log(res.url);
     },
+  });
+  await s.start();
+});
+
+test("user agent", async () => {
+  const s = new Spy({
+    URLGener: (async function* () {
+      yield "http://www.baidu.com";
+    })(),
+    userAgent: "test",
+    onRes: async (res) => {},
+  });
+  await s.start();
+});
+
+test("proxy", async () => {
+  const s = new Spy({
+    URLGener: (async function* () {
+      yield "http://www.baidu.com";
+    })(),
+    userAgent: "test",
+    onRes: async (res) => {},
+    proxy: { host: "localhost", port: 8888 },
   });
   await s.start();
 });

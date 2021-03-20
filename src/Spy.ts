@@ -3,8 +3,11 @@ import { parseCookies, stringifyCookies } from "spider-cookies";
 import { SpySettings } from "./SpySettings";
 import { Semaphore } from "jsemaphore";
 import { logger } from "./Logger";
+import tunnel from "tunnel";
+import { Proxy } from "./Proxy";
 
 export class Spy {
+  gotOptions: any;
   sleep(msec: number) {
     return new Promise((resolve) => setTimeout(resolve, msec));
   }
@@ -17,8 +20,8 @@ export class Spy {
   cookies: string;
   cookiesMap: Map<string, string>;
   userAgent: string;
-
   sem: Semaphore;
+  proxy: Proxy;
   constructor(options?: SpySettings) {
     this.finished = false;
     this.name = options?.name ?? "Spy";
@@ -32,6 +35,23 @@ export class Spy {
       this.onURL = options.onURL;
     }
     this.sem = new Semaphore(this.concurrency);
+
+    this.gotOptions = {
+      headers: {
+        cookie: stringifyCookies(this.cookiesMap),
+        "user-agent": this.userAgent,
+      },
+    };
+    if (options?.proxy) {
+      this.gotOptions.agent = {
+        http: tunnel.httpOverHttp({
+          proxy: options.proxy,
+        }),
+        https: tunnel.httpOverHttps({
+          proxy: options.proxy,
+        }),
+      };
+    }
   }
   async start() {
     logger.info("Start");
@@ -49,11 +69,12 @@ export class Spy {
       }
     } else {
       for await (const url of this.URLGener) {
+        this.sem.acquire();
         this.crawlURL(url, this.sem);
       }
     }
     while (!this.sem.empty) {
-      await this.sleep(200);
+      await this.sleep(1000);
     }
     this.finished = true;
   }
@@ -73,16 +94,12 @@ export class Spy {
 
   async onURL(url: string) {
     try {
-      const res = await got.get(url, {
-        headers: {
-          cookie: stringifyCookies(this.cookiesMap),
-        },
-      });
+      const res = await got.get(url, this.gotOptions);
       await this.updateCookies(res);
       return res;
     } catch (e) {
       logger.error(e);
-      return null;
+      return;
     }
   }
 

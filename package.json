@@ -11,9 +11,11 @@
     "coverage": "jest --coverage"
   },
   "dependencies": {
+    "@types/tunnel": "^0.0.2",
     "got": "^11.7.0",
     "jsemaphore": "^1.0.6",
     "spider-cookies": "^1.0.0",
+    "tunnel": "^0.0.6",
     "winston": "^3.3.3"
   },
   "main": "lib/index.js",

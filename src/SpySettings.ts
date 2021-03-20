@@ -1,5 +1,5 @@
 import { Response } from "got/dist/source";
-
+import { Proxy } from "./Proxy";
 export interface SpySettings {
   name?: string;
   concurrency?: number;
@@ -9,4 +9,5 @@ export interface SpySettings {
   onRes?: (response: Response<string>) => Promise<void>;
   userAgent?: string;
   onURL?: (url: string) => Promise<Response<string>>;
+  proxy?: Proxy;
 }
