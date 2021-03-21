@@ -51,14 +51,14 @@ test("user agent", async () => {
   await s.start();
 });
 
-test("proxy", async () => {
-  const s = new Spy({
-    URLGener: (async function* () {
-      yield "http://www.baidu.com";
-    })(),
-    userAgent: "test",
-    onRes: async (res) => {},
-    proxy: { host: "localhost", port: 8888 },
-  });
-  await s.start();
-});
+// test("proxy", async () => {
+//   const s = new Spy({
+//     URLGener: (async function* () {
+//       yield "http://www.baidu.com";
+//     })(),
+//     userAgent: "test",
+//     onRes: async (res) => {},
+//     proxy: { host: "localhost", port: 8888 },
+//   });
+//   await s.start();
+// });
